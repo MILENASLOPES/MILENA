@@ -1,0 +1,22 @@
+:root{
+
+    /*==========================
+        CORES PRINCIPAIS
+    ==========================*/
+
+    --primary:#006B3C;
+    --primary-dark:#004F2C;
+    --primary-light:#0A8B4E;
+
+    --gold:#C9A227;
+    --gold-light:#D8B649;
+
+    --background:#F5F7F5;
+    --surface:#FFFFFF;
+
+    --text:#1B2B20;
+    --text-light:#6E756F;
+
+    --border:#DCE4DD;
+
+}
