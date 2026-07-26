@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Biblioteca pessoal de documentos e modelos médicos."
+  >
+
+  <meta name="robots" content="noindex,nofollow">
+
+  <title>Ferramenta Médica</title>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <header class="topbar">
+
+    <div class="brand-area">
+
+      <button
+        class="menu-toggle"
+        id="menuToggle"
+        aria-label="Abrir menu"
+      >
+        ☰
+      </button>
+
+      <a href="#" class="brand">
+
+        <span class="brand-symbol">✚</span>
+
+        <span>
+          <strong>Ferramenta Médica</strong>
+          <small>Biblioteca profissional</small>
+        </span>
+
+      </a>
+
+    </div>
+
+    <button class="help-button" id="helpButton">
+      Como adicionar arquivos
+    </button>
+
+  </header>
+
+  <div class="app-layout">
+
+    <aside class="sidebar" id="sidebar">
+
+      <nav
+        id="categoryNav"
+        aria-label="Categorias"
+      ></nav>
+
+      <div class="sidebar-footer">
+        <strong>Uso profissional</strong>
+        <small>
+          Revise os documentos antes de utilizar.
+        </small>
+      </div>
+
+    </aside>
+
+    <main class="main-content">
+
+      <section class="hero">
+
+        <div class="hero-content">
+
+          <span class="eyebrow">
+            ACESSO RÁPIDO
+          </span>
+
+          <h1>
+            Seus documentos médicos em um só lugar.
+          </h1>
+
+          <p>
+            Organize e encontre rapidamente receituários,
+            anamneses, orientações, formulários, protocolos
+            e outros modelos utilizados na rotina médica.
+          </p>
+
+        </div>
+
+      </section>
+
+      <section class="search-section">
+
+        <label class="search-box">
+
+          <span class="search-icon">⌕</span>
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Buscar documento, categoria ou palavra-chave..."
+            autocomplete="off"
+          >
+
+          <kbd>Ctrl K</kbd>
+
+        </label>
+
+      </section>
+
+      <section class="content-section">
+
+        <div class="section-heading">
+
+          <div>
+
+            <span
+              class="section-kicker"
+              id="sectionKicker"
+            >
+              BIBLIOTECA
+            </span>
+
+            <h2 id="sectionTitle">
+              Todos os documentos
+            </h2>
+
+          </div>
+
+          <span
+            class="result-count"
+            id="resultCount"
+          ></span>
+
+        </div>
+
+        <div
+          class="documents-grid"
+          id="documentsGrid"
+        ></div>
+
+        <div
+          class="empty-state"
+          id="emptyState"
+          hidden
+        >
+
+          <div class="empty-icon">⌕</div>
+
+          <h3>Nenhum documento encontrado</h3>
+
+          <p>
+            Tente buscar por outro termo ou escolha
+            outra categoria.
+          </p>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+  <dialog class="modal" id="helpModal">
+
+    <div class="modal-header">
+
+      <div>
+
+        <span class="section-kicker">
+          CONFIGURAÇÃO
+        </span>
+
+        <h2>Como adicionar documentos</h2>
+
+      </div>
+
+      <button
+        class="close-button"
+        id="closeModal"
+        aria-label="Fechar"
+      >
+        ×
+      </button>
+
+    </div>
+
+    <div class="instructions">
+
+      <div class="step">
+
+        <strong>1</strong>
+
+        <p>
+          Copie o documento para uma pasta dentro
+          da pasta <code>documentos</code>.
+        </p>
+
+      </div>
+
+      <div class="step">
+
+        <strong>2</strong>
+
+        <p>
+          Abra o arquivo
+          <code>documentos.js</code>.
+        </p>
+
+      </div>
+
+      <div class="step">
+
+        <strong>3</strong>
+
+        <p>
+          Duplique um cadastro existente e altere
+          título, categoria, descrição, tipo e caminho.
+        </p>
+
+      </div>
+
+      <div class="step">
+
+        <strong>4</strong>
+
+        <p>
+          Salve o arquivo e atualize a página.
+        </p>
+
+      </div>
+
+    </div>
+
+    <div class="code-example">
+
+<pre>{
+  titulo: "Anamnese adulta",
+  categoria: "Anamneses",
+  descricao: "Modelo de consulta clínica.",
+  tipo: "DOCX",
+  arquivo: "documentos/anamneses/anamnese-adulta.docx",
+  tags: ["adulto", "consulta"]
+}</pre>
+
+    </div>
+
+    <p class="privacy-note">
+
+      <strong>Importante:</strong>
+
+      não publique documentos preenchidos com nome,
+      CPF, telefone, exames ou informações clínicas
+      identificáveis de pacientes.
+
+    </p>
+
+  </dialog>
+
+  <script src="documentos.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
