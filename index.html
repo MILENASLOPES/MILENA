@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Ferramenta MFC</title>
+
+  <style>
+    :root {
+      --verde: #006b3c;
+      --verde-escuro: #004f2c;
+      --verde-claro: #078c50;
+      --dourado: #c9a227;
+      --dourado-claro: #e0c15a;
+      --fundo: #f4f6f4;
+      --branco: #ffffff;
+      --texto: #1f2923;
+      --borda: #d8ded9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      color: var(--texto);
+      background: var(--fundo);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* MENU SUPERIOR */
+
+    .barra {
+      position: relative;
+      z-index: 1000;
+
+      min-height: 58px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 0 22px;
+
+      color: var(--branco);
+      background: var(--verde);
+
+      border-bottom: 4px solid var(--dourado);
+
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      margin-right: 35px;
+
+      color: var(--branco);
+      font-size: 18px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .logo-simbolo {
+      width: 34px;
+      height: 34px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      color: var(--verde-escuro);
+      background: var(--dourado);
+
+      font-size: 20px;
+      font-weight: 900;
+    }
+
+    .menu {
+      height: 58px;
+
+      display: flex;
+      align-items: stretch;
+
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
+    }
+
+    .menu > li {
+      position: relative;
+    }
+
+    .menu-principal {
+      height: 100%;
+
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      padding: 0 18px;
+
+      border: 0;
+
+      color: var(--branco);
+      background: transparent;
+
+      font-size: 15px;
+      font-weight: 600;
+
+      cursor: pointer;
+    }
+
+    .menu-principal:hover,
+    .menu > li:hover > .menu-principal {
+      color: var(--verde-escuro);
+      background: var(--dourado);
+    }
+
+    .seta {
+      font-size: 10px;
+    }
+
+    /* SUBMENU */
+
+    .submenu {
+      position: absolute;
+      top: 58px;
+      left: 0;
+
+      min-width: 255px;
+      max-height: calc(100vh - 75px);
+
+      display: none;
+      overflow-y: auto;
+
+      margin: 0;
+      padding: 7px 0;
+
+      border: 1px solid var(--borda);
+      border-top: 3px solid var(--dourado);
+      border-radius: 0 0 7px 7px;
+
+      background: var(--branco);
+
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+
+      list-style: none;
+    }
+
+    .menu > li:hover .submenu,
+    .menu > li.aberto .submenu {
+      display: block;
+    }
+
+    .submenu button,
+    .submenu a {
+      width: 100%;
+
+      display: block;
+
+      padding: 11px 16px;
+
+      border: 0;
+
+      color: var(--texto);
+      background: transparent;
+
+      font-size: 14px;
+      text-align: left;
+      text-decoration: none;
+
+      cursor: pointer;
+    }
+
+    .submenu button:hover,
+    .submenu a:hover {
+      color: var(--branco);
+      background: var(--verde);
+    }
+
+    /* VISUALIZADOR */
+
+    .conteudo {
+      position: relative;
+
+      flex: 1;
+
+      min-height: 0;
+
+      background: var(--fundo);
+    }
+
+    .tela-inicial {
+      position: absolute;
+      inset: 0;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 30px;
+    }
+
+    .apresentacao {
+      max-width: 720px;
+
+      text-align: center;
+    }
+
+    .apresentacao-simbolo {
+      width: 82px;
+      height: 82px;
+
+      display: grid;
+      place-items: center;
+
+      margin: 0 auto 22px;
+
+      border: 3px solid var(--dourado);
+      border-radius: 50%;
+
+      color: var(--dourado);
+      background: var(--verde);
+
+      font-size: 42px;
+      font-weight: 900;
+    }
+
+    .apresentacao h1 {
+      margin: 0 0 12px;
+
+      color: var(--verde-escuro);
+
+      font-size: clamp(28px, 4vw, 46px);
+    }
+
+    .apresentacao p {
+      margin: 0;
+
+      color: #66706a;
+
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .aviso {
+      margin-top: 24px;
+      padding: 12px 16px;
+
+      border-left: 4px solid var(--dourado);
+      border-radius: 5px;
+
+      color: #5b4b17;
+      background: #fff8dd;
+
+      font-size: 13px;
+      text-align: left;
+    }
+
+    #visualizador {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      display: none;
+
+      border: 0;
+
+      background: var(--branco);
+    }
+
+    /* CELULAR */
+
+    .botao-mobile {
+      display: none;
+
+      margin-left: auto;
+
+      border: 1px solid var(--dourado);
+      border-radius: 5px;
+
+      color: var(--branco);
+      background: transparent;
+
+      font-size: 22px;
+
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        overflow: auto;
+      }
+
+      .barra {
+        min-height: 58px;
+        flex-wrap: wrap;
+        padding: 10px 14px;
+      }
+
+      .logo {
+        margin-right: 10px;
+      }
+
+      .botao-mobile {
+        display: block;
+      }
+
+      .menu {
+        width: 100%;
+        height: auto;
+
+        display: none;
+        flex-direction: column;
+
+        margin-top: 10px;
+      }
+
+      .menu.visivel {
+        display: flex;
+      }
+
+      .menu > li {
+        width: 100%;
+      }
+
+      .menu-principal {
+        width: 100%;
+        height: 44px;
+        justify-content: space-between;
+        padding: 0 12px;
+      }
+
+      .submenu {
+        position: static;
+
+        width: 100%;
+        min-width: 0;
+        max-height: none;
+
+        border: 0;
+        border-radius: 0;
+
+        box-shadow: none;
+      }
+
+      .menu > li:hover .submenu {
+        display: none;
+      }
+
+      .menu > li.aberto .submenu {
+        display: block;
+      }
+
+      .conteudo {
+        min-height: calc(100vh - 58px);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="barra">
+
+    <div class="logo">
+      <span class="logo-simbolo">✚</span>
+      <span>Ferramenta MFC</span>
+    </div>
+
+    <button
+      class="botao-mobile"
+      id="botaoMobile"
+      aria-label="Abrir menu"
+    >
+      ☰
+    </button>
+
+    <ul class="menu" id="menu">
+
+      <li>
+        <button class="menu-principal">
+          PECs <span class="seta">▼</span>
+        </button>
+
+        <ul class="submenu">
+          <li><button onclick="abrirArquivo('arquivos/pecs/demanda-espontanea.pdf')">Demanda Espontânea</button></li>
+          <li><button onclick="abrirArquivo('arquivos/pecs/consulta-agendada.pdf')">Consulta Agendada</button></li>
+          <li><button onclick="abrirArquivo('arquivos/pecs/evasao.pdf')">Evasão</button></li>
+          <li><button onclick="abrirArquivo('arquivos/pecs/renovacao-receita.pdf')">Renovação de Receita</button></li>
+          <li><button onclick="abrirArquivo('arquivos/pecs/pre-natal.pdf')">Pré-Natal</button></li>
+          <li><button onclick="abrirArquivo('arquivos/pecs/puericultura.pdf')">Puericultura</button></li>
+          <li><button onclick="abrirArquivo('arquivos/pecs/puerperio.pdf')">Puerpério</button></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-principal">
+          Documentos <span class="seta">▼</span>
+        </button>
+
+        <ul class="submenu">
+          <li><button onclick="abrirArquivo('arquivos/documentos/guia-farmaceutico.pdf')">Guia Farmacêutico</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/cid-10.pdf')">CID-10</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/ciap-2.pdf')">CIAP-2</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/tabela-sigtap.pdf')">Tabela SIGTAP</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/mrpa.pdf')">MRPA</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/mapa-glicemico.pdf')">Mapa Glicêmico</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/escala-bristol.pdf')">Escala de Bristol</button></li>
+          <li><button onclick="abrirArquivo('arquivos/documentos/m-chat.pdf')">M-CHAT-R/F</button></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-principal">
+          Receitas <span class="seta">▼</span>
+        </button>
+
+        <ul class="submenu">
+          <li><button onclick="abrirArquivo('arquivos/receitas/sos-gestante.pdf')">SOS Gestante</button></li>
+          <li><button onclick="abrirArquivo('arquivos/receitas/dengue.pdf')">Dengue</button></li>
+          <li><button onclick="abrirArquivo('arquivos/receitas/gastroenterite.pdf')">Gastroenterite</button></li>
+        </ul>
+      </li>
+
+      <li>
+        <button class="menu-principal">
+          Links Úteis <span class="seta">▼</span>
+        </button>
+
+        <ul class="submenu">
+          <li>
+            <a
+              href="https://departamentos.cardiol.br/sbc-da/2015/CALCULADORAER2020/index.html"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Calculadora de Risco Cardiovascular
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://www.fetalmed.net/calculadora-idade-gestacional/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Calculadora de Idade Gestacional
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="https://beta.pedajuda.com.br/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              PedAjuda
+            </a>
+          </li>
+        </ul>
+      </li>
+
+    </ul>
+  </header>
+
+  <main class="conteudo">
+
+    <section class="tela-inicial" id="telaInicial">
+      <div class="apresentacao">
+        <div class="apresentacao-simbolo">✚</div>
+
+        <h1>Ferramenta MFC</h1>
+
+        <p>
+          Selecione uma opção no menu superior para abrir
+          documentos, receitas, modelos de PEC e ferramentas clínicas.
+        </p>
+
+        <div class="aviso">
+          Substitua os arquivos de exemplo pelos seus próprios PDFs,
+          mantendo os mesmos nomes e pastas, ou altere os caminhos no código.
+        </div>
+      </div>
+    </section>
+
+    <iframe
+      id="visualizador"
+      title="Visualizador de documentos"
+    ></iframe>
+
+  </main>
+
+  <script>
+    const visualizador = document.getElementById("visualizador");
+    const telaInicial = document.getElementById("telaInicial");
+    const menu = document.getElementById("menu");
+    const botaoMobile = document.getElementById("botaoMobile");
+    const menusPrincipais = document.querySelectorAll(".menu-principal");
+
+    function abrirArquivo(caminho) {
+      visualizador.src = caminho;
+      visualizador.style.display = "block";
+      telaInicial.style.display = "none";
+
+      document
+        .querySelectorAll(".menu > li")
+        .forEach((item) => item.classList.remove("aberto"));
+
+      menu.classList.remove("visivel");
+    }
+
+    botaoMobile.addEventListener("click", () => {
+      menu.classList.toggle("visivel");
+    });
+
+    menusPrincipais.forEach((botao) => {
+      botao.addEventListener("click", () => {
+        const itemAtual = botao.parentElement;
+
+        document
+          .querySelectorAll(".menu > li")
+          .forEach((item) => {
+            if (item !== itemAtual) {
+              item.classList.remove("aberto");
+            }
+          });
+
+        itemAtual.classList.toggle("aberto");
+      });
+    });
+
+    document.addEventListener("click", (evento) => {
+      if (!evento.target.closest(".menu") &&
+          !evento.target.closest("#botaoMobile")) {
+        document
+          .querySelectorAll(".menu > li")
+          .forEach((item) => item.classList.remove("aberto"));
+      }
+    });
+  </script>
+
+</body>
+</html>
